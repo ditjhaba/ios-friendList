@@ -14,12 +14,30 @@ class ViewController: UIViewController, UITableViewDataSource {
     var names = [String]()
 
     @IBAction func addName(sender: AnyObject) {
+        let alert = UIAlertController(title: "New Name", message: "Add a new name.", preferredStyle: .Alert)
+        
+        let save = UIAlertAction(title: "Save", style: .Default) { (UIAlertAction) -> Void in
+            let textField = alert.textFields?.first
+            self.names.append((textField?.text)!)
+            self.tableView?.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (UIAlertAction) -> Void in
+        }
+        
+        alert.addTextFieldWithConfigurationHandler { (UITextField) -> Void in
+        }
+        
+        alert.addAction(save)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "\"The List\""
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
